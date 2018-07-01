@@ -13,12 +13,13 @@ import java.util.Random;
 @Service
 public class TestGeneratorService {
 
-    private int questionsCount = 5;
+    private final int questionsCount;
 
-    private QuestionBlockReader questionBlockReader;
+    private final QuestionBlockReader questionBlockReader;
 
-    public TestGeneratorService(QuestionBlockReader questionBlockReader) {
+    public TestGeneratorService(QuestionBlockReader questionBlockReader, int questionsCount) {
         this.questionBlockReader = questionBlockReader;
+        this.questionsCount = questionsCount;
     }
 
     public Test generate(User executor) {
@@ -43,9 +44,5 @@ public class TestGeneratorService {
         }
 
         return new Test(testQuestionBlocks, executor);
-    }
-
-    public void setQuestionsCount(int questionsCount) {
-        this.questionsCount = questionsCount;
     }
 }

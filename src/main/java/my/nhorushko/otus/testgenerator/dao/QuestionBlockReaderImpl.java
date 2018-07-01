@@ -1,7 +1,6 @@
 package my.nhorushko.otus.testgenerator.dao;
 
 import my.nhorushko.otus.testgenerator.model.QuestionBlock;
-import org.springframework.stereotype.Repository;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -10,13 +9,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-@Repository
 public class QuestionBlockReaderImpl implements QuestionBlockReader {
 
-    private String fileName = "src/main/resources/questions.csv";
-    private QuestionBlockParser questionBlockParser;
+    private final String fileName;
+    private final QuestionBlockParser questionBlockParser;
 
-    public QuestionBlockReaderImpl(QuestionBlockParser questionBlockParser) {
+    public QuestionBlockReaderImpl(String fileName, QuestionBlockParser questionBlockParser) {
+        this.fileName = fileName;
         this.questionBlockParser = questionBlockParser;
     }
 
@@ -36,10 +35,6 @@ public class QuestionBlockReaderImpl implements QuestionBlockReader {
         }
 
         return questionBlocks;
-    }
-
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
     }
 }
 

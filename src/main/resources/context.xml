@@ -4,29 +4,29 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-   <context:property-placeholder location="application.properties"/>
+    <context:property-placeholder location="application.properties"/>
 
     <bean id="questionBlockParser" class="my.nhorushko.otus.testgenerator.dao.QuestionBlockParser">
-        <property name="csvSeparator" value ="${file.parser.csv-separator}"/>
+        <constructor-arg name="csvSeparator" value="${file.parser.csv-separator}"/>
 
-        <property name="questionToken" value="${file.parser.token.text}"/>
+        <constructor-arg name="questionToken" value="${file.parser.token.text}"/>
 
-       <property name="answerTrueToken" value = "${file.parser.token.true-text}"/>
+        <constructor-arg name="answerTrueToken" value="${file.parser.token.true-text}"/>
 
-        <property name="answerFalseToken" value = "${file.parser.token.false-text}"/>
+        <constructor-arg name="answerFalseToken" value="${file.parser.token.false-text}"/>
     </bean>
 
-    <bean id="testCheckerService" class="my.nhorushko.otus.testgenerator.service.TestChekerService">
+    <bean id="testCheckerService" class="my.nhorushko.otus.testgenerator.service.TestCheckerService">
     </bean>
 
     <bean id="questionBlockReader" class="my.nhorushko.otus.testgenerator.dao.QuestionBlockReaderImpl">
+        <constructor-arg name="fileName" value="${path.question.file}"/>
         <constructor-arg ref="questionBlockParser"></constructor-arg>
-        <property name="fileName" value = "${path.question.file}"/>
     </bean>
 
     <bean id="testGeneratorService" class="my.nhorushko.otus.testgenerator.service.TestGeneratorService">
         <constructor-arg ref="questionBlockReader"></constructor-arg>
-        <property name="questionsCount" value = "${test.questions.count}"/>
+        <constructor-arg name="questionsCount" value="${test.questions.count}"/>
     </bean>
 
     <bean id="view" class="my.nhorushko.otus.testgenerator.view.Console">

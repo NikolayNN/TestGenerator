@@ -4,6 +4,7 @@ import my.nhorushko.otus.testgenerator.model.Answer;
 import my.nhorushko.otus.testgenerator.model.QuestionBlock;
 import my.nhorushko.otus.testgenerator.model.Test;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Console implements View {
@@ -14,7 +15,7 @@ public class Console implements View {
     }
 
     @Override
-    public void writeQuestionBlock(QuestionBlock questionBlock) {
+    public void write(QuestionBlock questionBlock) {
 
         System.out.println(questionBlock.getQuestion().getText());
 
@@ -25,23 +26,37 @@ public class Console implements View {
     }
 
     @Override
-    public String readString() {
-        Scanner sc = new Scanner(System.in);
-        return sc.nextLine();
+    public String readNotBlankString() {
+
+        String str = "";
+
+        Scanner scanner = new Scanner(System.in);
+
+        while (str.isEmpty() || str == null) {
+            str = scanner.nextLine();
+        }
+
+        return str;
     }
 
     @Override
     public int readInt(int maxValue) {
 
-        Scanner sc = new Scanner(System.in);
-        int numb = sc.nextInt();
+        int numb = Integer.MIN_VALUE;
 
-        if(numb > maxValue || numb < 0){
-            throw new RuntimeException("Error. Expect numb between 0 and " + maxValue);
+        while (numb < 0) {
+            try {
+                numb = new Scanner(System.in).nextInt();
+            } catch (InputMismatchException ex) {
+                write("Error. Expect numb between 0 and " + maxValue);
+                continue;
+            }
+
+            if (numb > maxValue || numb < 0) {
+                write("Error. Expect numb between 0 and " + maxValue);
+                numb = Integer.MIN_VALUE;
+            }
         }
-
         return numb;
     }
-
-
 }

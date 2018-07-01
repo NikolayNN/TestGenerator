@@ -3,68 +3,45 @@ package my.nhorushko.otus.testgenerator.controller;
 import my.nhorushko.otus.testgenerator.model.QuestionBlock;
 import my.nhorushko.otus.testgenerator.model.Test;
 import my.nhorushko.otus.testgenerator.model.User;
-import my.nhorushko.otus.testgenerator.service.TestChekerService;
+import my.nhorushko.otus.testgenerator.service.TestCheckerService;
 import my.nhorushko.otus.testgenerator.service.TestGeneratorService;
 import my.nhorushko.otus.testgenerator.view.View;
 import org.springframework.stereotype.Controller;
 
-import java.util.InputMismatchException;
-
 @Controller
 public class ApplicationController {
 
-    private View view;
+    private final View view;
 
-    private TestGeneratorService testGeneratorService;
+    private final TestGeneratorService testGeneratorService;
 
-    private TestChekerService testChekerService;
+    private final TestCheckerService testCheckerService;
 
-    public ApplicationController(View view, TestGeneratorService testGeneratorService, TestChekerService testChekerService) {
+    public ApplicationController(View view, TestGeneratorService testGeneratorService, TestCheckerService testCheckerService) {
         this.view = view;
         this.testGeneratorService = testGeneratorService;
-        this.testChekerService = testChekerService;
+        this.testCheckerService = testCheckerService;
     }
 
     public void run() {
 
-        String userName = "";
-        while (userName.isEmpty()) {
-            view.write("enter your name");
-            userName = view.readString();
-        }
+        view.write("enter your name");
+        String userName = view.readNotBlankString();
 
-        String userSurname = "";
-        while (userSurname.isEmpty()) {
-            view.write("enter your surname");
-            userSurname = view.readString();
-        }
+        view.write("enter your surname");
+        String userSurname = view.readNotBlankString();
 
         Test test = testGeneratorService.generate(new User(userName, userSurname));
 
         for (QuestionBlock questionBlock : test.getQuestionBlocks()) {
 
-            int chosenAnswerNumber = -10;
+            view.write(questionBlock);
 
-            while (chosenAnswerNumber < 0) {
+            int chosenAnswerNumber = view.readInt(questionBlock.getAnswers().size() - 1);
 
-                try {
-
-                    view.writeQuestionBlock(questionBlock);
-                    view.write("Select the number of the question:");
-                    chosenAnswerNumber = Integer.valueOf(view.readInt(questionBlock.getAnswers().size() - 1));
-
-                } catch (InputMismatchException ex) {
-                    view.write("Error. Please Input number from 0 to " + (questionBlock.getAnswers().size() - 1));
-                    view.write("______________________");
-
-                } catch (Exception ex) {
-                    view.write(ex.getMessage());
-                    view.write("______________________");
-                }
-            }
             test.addDecision(questionBlock, questionBlock.getAnswers().get(chosenAnswerNumber));
         }
 
-        view.write(String.format("You answered correctly for %d questions", testChekerService.calculateCorrectAnswers(test)));
+        view.write(String.format("You answered correctly for %d questions", testCheckerService.calculateCorrectAnswers(test)));
     }
 }

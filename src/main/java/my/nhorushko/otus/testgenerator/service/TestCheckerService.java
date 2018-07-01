@@ -2,7 +2,7 @@ package my.nhorushko.otus.testgenerator.service;
 
 import my.nhorushko.otus.testgenerator.model.Test;
 
-public class TestChekerService {
+public class TestCheckerService {
 
     public int calculateCorrectAnswers(Test test){
 

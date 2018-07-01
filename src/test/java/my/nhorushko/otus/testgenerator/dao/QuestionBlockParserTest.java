@@ -21,7 +21,7 @@ public class QuestionBlockParserTest {
 
     @Before
     public void setUp() {
-        questionBlockParser = new QuestionBlockParser();
+        questionBlockParser = new QuestionBlockParser(";", "{Q}", "{true}", "{false}");
     }
 
     @Test

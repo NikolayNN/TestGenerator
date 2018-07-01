@@ -6,10 +6,17 @@ import my.nhorushko.otus.testgenerator.model.QuestionBlock;
 
 public class QuestionBlockParser {
 
-    private String csvSeparator;
-    private String questionToken;
-    private String answerTrueToken;
-    private String answerFalseToken;
+    private final String csvSeparator;
+    private final String questionToken;
+    private final String answerTrueToken;
+    private final String answerFalseToken;
+
+    public QuestionBlockParser(String csvSeparator, String questionToken, String answerTrueToken, String answerFalseToken) {
+        this.csvSeparator = csvSeparator;
+        this.questionToken = questionToken;
+        this.answerTrueToken = answerTrueToken;
+        this.answerFalseToken = answerFalseToken;
+    }
 
     public QuestionBlock convertToQuestionBlock(String line) {
 
@@ -49,21 +56,5 @@ public class QuestionBlockParser {
         }
 
         throw new IllegalArgumentException("Wrong format. Each answer have to starts with token {true} or {false}");
-    }
-
-    public void setCsvSeparator(String csvSeparator) {
-        this.csvSeparator = csvSeparator;
-    }
-
-    public void setQuestionToken(String questionToken) {
-        this.questionToken = questionToken;
-    }
-
-    public void setAnswerTrueToken(String answerTrueToken) {
-        this.answerTrueToken = answerTrueToken;
-    }
-
-    public void setAnswerFalseToken(String answerFalseToken) {
-        this.answerFalseToken = answerFalseToken;
     }
 }
