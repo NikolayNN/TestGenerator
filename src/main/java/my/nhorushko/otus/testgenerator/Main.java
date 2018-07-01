@@ -1,20 +1,19 @@
 package my.nhorushko.otus.testgenerator;
 
 import my.nhorushko.otus.testgenerator.controller.ApplicationController;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.PropertySource;
 
-@Component
+@ComponentScan
+@PropertySource("classpath:/application.properties")
 public class Main {
-
-
 
     public static void main(String[] args) {
 
-        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("/context.xml");
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(Main.class);
         ApplicationController app = context.getBean(ApplicationController.class);
 
         app.run();
     }
-
 }

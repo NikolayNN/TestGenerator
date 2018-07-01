@@ -3,7 +3,10 @@ package my.nhorushko.otus.testgenerator.dao;
 import my.nhorushko.otus.testgenerator.model.Answer;
 import my.nhorushko.otus.testgenerator.model.Question;
 import my.nhorushko.otus.testgenerator.model.QuestionBlock;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
+@Service
 public class QuestionBlockParser {
 
     private final String csvSeparator;
@@ -11,7 +14,10 @@ public class QuestionBlockParser {
     private final String answerTrueToken;
     private final String answerFalseToken;
 
-    public QuestionBlockParser(String csvSeparator, String questionToken, String answerTrueToken, String answerFalseToken) {
+    public QuestionBlockParser(@Value("${file.parser.csv-separator}") String csvSeparator,
+                               @Value("${file.parser.token.text}") String questionToken,
+                               @Value("${file.parser.token.true-text}") String answerTrueToken,
+                               @Value("${file.parser.token.false-text}") String answerFalseToken) {
         this.csvSeparator = csvSeparator;
         this.questionToken = questionToken;
         this.answerTrueToken = answerTrueToken;

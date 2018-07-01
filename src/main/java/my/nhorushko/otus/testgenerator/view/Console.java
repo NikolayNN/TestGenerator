@@ -3,10 +3,12 @@ package my.nhorushko.otus.testgenerator.view;
 import my.nhorushko.otus.testgenerator.model.Answer;
 import my.nhorushko.otus.testgenerator.model.QuestionBlock;
 import my.nhorushko.otus.testgenerator.model.Test;
+import org.springframework.stereotype.Service;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+@Service
 public class Console implements View {
 
     @Override

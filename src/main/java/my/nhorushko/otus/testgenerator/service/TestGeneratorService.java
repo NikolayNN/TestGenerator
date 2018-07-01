@@ -4,6 +4,7 @@ import my.nhorushko.otus.testgenerator.dao.QuestionBlockReader;
 import my.nhorushko.otus.testgenerator.model.QuestionBlock;
 import my.nhorushko.otus.testgenerator.model.Test;
 import my.nhorushko.otus.testgenerator.model.User;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -17,7 +18,7 @@ public class TestGeneratorService {
 
     private final QuestionBlockReader questionBlockReader;
 
-    public TestGeneratorService(QuestionBlockReader questionBlockReader, int questionsCount) {
+    public TestGeneratorService(QuestionBlockReader questionBlockReader, @Value("${test.questions.count}") int questionsCount) {
         this.questionBlockReader = questionBlockReader;
         this.questionsCount = questionsCount;
     }

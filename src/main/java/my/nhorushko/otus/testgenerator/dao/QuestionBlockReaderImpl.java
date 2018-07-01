@@ -1,6 +1,8 @@
 package my.nhorushko.otus.testgenerator.dao;
 
 import my.nhorushko.otus.testgenerator.model.QuestionBlock;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -9,12 +11,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+@Service
 public class QuestionBlockReaderImpl implements QuestionBlockReader {
 
     private final String fileName;
     private final QuestionBlockParser questionBlockParser;
 
-    public QuestionBlockReaderImpl(String fileName, QuestionBlockParser questionBlockParser) {
+    public QuestionBlockReaderImpl(@Value("${path.question.file}") String fileName, QuestionBlockParser questionBlockParser) {
         this.fileName = fileName;
         this.questionBlockParser = questionBlockParser;
     }
