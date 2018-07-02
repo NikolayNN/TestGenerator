@@ -26,7 +26,7 @@ public class QuestionBlockParser {
 
     public QuestionBlock convertToQuestionBlock(String line) {
 
-        if (line == null || line.isEmpty()){
+        if (line == null || line.isEmpty()) {
             return new QuestionBlock();
         }
 

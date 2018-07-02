@@ -1,7 +1,7 @@
 package my.nhorushko.otus.testgenerator.dao;
 
 import my.nhorushko.otus.testgenerator.model.QuestionBlock;
-import org.springframework.beans.factory.annotation.Value;
+import my.nhorushko.otus.testgenerator.service.AppLocalization;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -14,11 +14,11 @@ import java.util.stream.Stream;
 @Service
 public class QuestionBlockReaderImpl implements QuestionBlockReader {
 
-    private final String fileName;
+    private final AppLocalization appLocalization;
     private final QuestionBlockParser questionBlockParser;
 
-    public QuestionBlockReaderImpl(@Value("${path.question.file}") String fileName, QuestionBlockParser questionBlockParser) {
-        this.fileName = fileName;
+    public QuestionBlockReaderImpl(AppLocalization appLocalization, QuestionBlockParser questionBlockParser) {
+        this.appLocalization = appLocalization;
         this.questionBlockParser = questionBlockParser;
     }
 
@@ -26,7 +26,7 @@ public class QuestionBlockReaderImpl implements QuestionBlockReader {
 
         List<QuestionBlock> questionBlocks;
 
-        try (Stream<String> stream = Files.lines(Paths.get(fileName))) {
+        try (Stream<String> stream = Files.lines(Paths.get(appLocalization.getQuestionFilePath()))) {
 
             questionBlocks = stream
                     .filter(line -> !line.isEmpty())
